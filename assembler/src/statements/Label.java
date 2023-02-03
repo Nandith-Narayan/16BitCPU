@@ -6,4 +6,8 @@ public class Label extends Statement{
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "Label: "+name;
+    }
 }

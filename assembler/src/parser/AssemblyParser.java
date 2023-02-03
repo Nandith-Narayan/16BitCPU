@@ -17,9 +17,9 @@ public class AssemblyParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, OPCODE_SIMPLE=7, OPCODE_COMPOUND=8, 
-		SPACE=9, DECIMAL_LITERAL=10, HEX_LITERAL=11, BINARY_LITERAL=12, IDENTIFIER=13, 
-		NEWLINE=14, WS=15, COMMENT=16;
+		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, OPCODE_SIMPLE=6, OPCODE_COMPOUND=7, 
+		SPACE=8, DECIMAL_LITERAL=9, HEX_LITERAL=10, BINARY_LITERAL=11, IDENTIFIER=12, 
+		NEWLINE=13, WS=14, COMMENT=15, DOLLAR_SIGN=16;
 	public static final int
 		RULE_program = 0, RULE_statement = 1, RULE_simple_instruction = 2, RULE_compound_instruction = 3, 
 		RULE_label = 4, RULE_literal = 5, RULE_constant = 6, RULE_variable = 7;
@@ -33,15 +33,16 @@ public class AssemblyParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'\\t'", "'$'", "':'", "'const'", "'='", "'var'", null, null, "' '"
+			null, "'\\t'", "':'", "'const'", "'='", "'var'", null, null, "' '", null, 
+			null, null, null, null, null, null, "'$'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, null, null, null, null, null, "OPCODE_SIMPLE", "OPCODE_COMPOUND", 
+			null, null, null, null, null, null, "OPCODE_SIMPLE", "OPCODE_COMPOUND", 
 			"SPACE", "DECIMAL_LITERAL", "HEX_LITERAL", "BINARY_LITERAL", "IDENTIFIER", 
-			"NEWLINE", "WS", "COMMENT"
+			"NEWLINE", "WS", "COMMENT", "DOLLAR_SIGN"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -136,7 +137,7 @@ public class AssemblyParser extends Parser {
 			setState(34);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 9170L) != 0) {
+			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 4586L) != 0) {
 				{
 				{
 				setState(19);
@@ -248,14 +249,14 @@ public class AssemblyParser extends Parser {
 				label();
 				}
 				break;
-			case T__5:
+			case T__4:
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(38);
 				variable();
 				}
 				break;
-			case T__3:
+			case T__2:
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(39);
@@ -334,6 +335,7 @@ public class AssemblyParser extends Parser {
 			return getRuleContext(LiteralContext.class,0);
 		}
 		public TerminalNode IDENTIFIER() { return getToken(AssemblyParser.IDENTIFIER, 0); }
+		public TerminalNode DOLLAR_SIGN() { return getToken(AssemblyParser.DOLLAR_SIGN, 0); }
 		public Compound_instructionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -382,7 +384,7 @@ public class AssemblyParser extends Parser {
 				setState(53);
 				match(SPACE);
 				setState(54);
-				match(T__1);
+				match(DOLLAR_SIGN);
 				setState(55);
 				match(IDENTIFIER);
 				}
@@ -423,7 +425,7 @@ public class AssemblyParser extends Parser {
 			setState(58);
 			match(IDENTIFIER);
 			setState(59);
-			match(T__2);
+			match(T__1);
 			}
 		}
 		catch (RecognitionException re) {
@@ -462,7 +464,7 @@ public class AssemblyParser extends Parser {
 			{
 			setState(61);
 			_la = _input.LA(1);
-			if ( !(((_la) & ~0x3f) == 0 && ((1L << _la) & 7168L) != 0) ) {
+			if ( !(((_la) & ~0x3f) == 0 && ((1L << _la) & 3584L) != 0) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -512,7 +514,7 @@ public class AssemblyParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(63);
-			match(T__3);
+			match(T__2);
 			setState(64);
 			match(SPACE);
 			setState(65);
@@ -520,7 +522,7 @@ public class AssemblyParser extends Parser {
 			setState(66);
 			match(SPACE);
 			setState(67);
-			match(T__4);
+			match(T__3);
 			setState(71);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
@@ -572,7 +574,7 @@ public class AssemblyParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(76);
-			match(T__5);
+			match(T__4);
 			setState(77);
 			match(SPACE);
 			setState(78);
@@ -605,17 +607,17 @@ public class AssemblyParser extends Parser {
 		"\u0001\u0006\u0001\u0006\u0001\u0006\u0005\u0006F\b\u0006\n\u0006\f\u0006"+
 		"I\t\u0006\u0001\u0006\u0001\u0006\u0001\u0007\u0001\u0007\u0001\u0007"+
 		"\u0001\u0007\u0001\u0007\u0000\u0000\b\u0000\u0002\u0004\u0006\b\n\f\u000e"+
-		"\u0000\u0002\u0002\u0000\u0001\u0001\t\t\u0001\u0000\n\fS\u0000\"\u0001"+
-		"\u0000\u0000\u0000\u0002*\u0001\u0000\u0000\u0000\u0004,\u0001\u0000\u0000"+
-		"\u0000\u00068\u0001\u0000\u0000\u0000\b:\u0001\u0000\u0000\u0000\n=\u0001"+
-		"\u0000\u0000\u0000\f?\u0001\u0000\u0000\u0000\u000eL\u0001\u0000\u0000"+
-		"\u0000\u0010\u0012\u0007\u0000\u0000\u0000\u0011\u0010\u0001\u0000\u0000"+
-		"\u0000\u0012\u0015\u0001\u0000\u0000\u0000\u0013\u0011\u0001\u0000\u0000"+
-		"\u0000\u0013\u0014\u0001\u0000\u0000\u0000\u0014\u0016\u0001\u0000\u0000"+
-		"\u0000\u0015\u0013\u0001\u0000\u0000\u0000\u0016\u0018\u0003\u0002\u0001"+
-		"\u0000\u0017\u0019\u0005\u0010\u0000\u0000\u0018\u0017\u0001\u0000\u0000"+
-		"\u0000\u0018\u0019\u0001\u0000\u0000\u0000\u0019\u001d\u0001\u0000\u0000"+
-		"\u0000\u001a\u001c\u0005\u000e\u0000\u0000\u001b\u001a\u0001\u0000\u0000"+
+		"\u0000\u0002\u0002\u0000\u0001\u0001\b\b\u0001\u0000\t\u000bS\u0000\""+
+		"\u0001\u0000\u0000\u0000\u0002*\u0001\u0000\u0000\u0000\u0004,\u0001\u0000"+
+		"\u0000\u0000\u00068\u0001\u0000\u0000\u0000\b:\u0001\u0000\u0000\u0000"+
+		"\n=\u0001\u0000\u0000\u0000\f?\u0001\u0000\u0000\u0000\u000eL\u0001\u0000"+
+		"\u0000\u0000\u0010\u0012\u0007\u0000\u0000\u0000\u0011\u0010\u0001\u0000"+
+		"\u0000\u0000\u0012\u0015\u0001\u0000\u0000\u0000\u0013\u0011\u0001\u0000"+
+		"\u0000\u0000\u0013\u0014\u0001\u0000\u0000\u0000\u0014\u0016\u0001\u0000"+
+		"\u0000\u0000\u0015\u0013\u0001\u0000\u0000\u0000\u0016\u0018\u0003\u0002"+
+		"\u0001\u0000\u0017\u0019\u0005\u000f\u0000\u0000\u0018\u0017\u0001\u0000"+
+		"\u0000\u0000\u0018\u0019\u0001\u0000\u0000\u0000\u0019\u001d\u0001\u0000"+
+		"\u0000\u0000\u001a\u001c\u0005\r\u0000\u0000\u001b\u001a\u0001\u0000\u0000"+
 		"\u0000\u001c\u001f\u0001\u0000\u0000\u0000\u001d\u001b\u0001\u0000\u0000"+
 		"\u0000\u001d\u001e\u0001\u0000\u0000\u0000\u001e!\u0001\u0000\u0000\u0000"+
 		"\u001f\u001d\u0001\u0000\u0000\u0000 \u0013\u0001\u0000\u0000\u0000!$"+
@@ -625,20 +627,21 @@ public class AssemblyParser extends Parser {
 		"\u0004\u0002\u0000)+\u0003\u0006\u0003\u0000*%\u0001\u0000\u0000\u0000"+
 		"*&\u0001\u0000\u0000\u0000*\'\u0001\u0000\u0000\u0000*(\u0001\u0000\u0000"+
 		"\u0000*)\u0001\u0000\u0000\u0000+\u0003\u0001\u0000\u0000\u0000,-\u0005"+
-		"\u0007\u0000\u0000-\u0005\u0001\u0000\u0000\u0000./\u0005\b\u0000\u0000"+
-		"/0\u0005\t\u0000\u000009\u0003\n\u0005\u000012\u0005\b\u0000\u000023\u0005"+
-		"\t\u0000\u000039\u0005\r\u0000\u000045\u0005\b\u0000\u000056\u0005\t\u0000"+
-		"\u000067\u0005\u0002\u0000\u000079\u0005\r\u0000\u00008.\u0001\u0000\u0000"+
-		"\u000081\u0001\u0000\u0000\u000084\u0001\u0000\u0000\u00009\u0007\u0001"+
-		"\u0000\u0000\u0000:;\u0005\r\u0000\u0000;<\u0005\u0003\u0000\u0000<\t"+
-		"\u0001\u0000\u0000\u0000=>\u0007\u0001\u0000\u0000>\u000b\u0001\u0000"+
-		"\u0000\u0000?@\u0005\u0004\u0000\u0000@A\u0005\t\u0000\u0000AB\u0005\r"+
-		"\u0000\u0000BC\u0005\t\u0000\u0000CG\u0005\u0005\u0000\u0000DF\u0005\t"+
-		"\u0000\u0000ED\u0001\u0000\u0000\u0000FI\u0001\u0000\u0000\u0000GE\u0001"+
-		"\u0000\u0000\u0000GH\u0001\u0000\u0000\u0000HJ\u0001\u0000\u0000\u0000"+
-		"IG\u0001\u0000\u0000\u0000JK\u0003\n\u0005\u0000K\r\u0001\u0000\u0000"+
-		"\u0000LM\u0005\u0006\u0000\u0000MN\u0005\t\u0000\u0000NO\u0005\r\u0000"+
-		"\u0000O\u000f\u0001\u0000\u0000\u0000\u0007\u0013\u0018\u001d\"*8G";
+		"\u0006\u0000\u0000-\u0005\u0001\u0000\u0000\u0000./\u0005\u0007\u0000"+
+		"\u0000/0\u0005\b\u0000\u000009\u0003\n\u0005\u000012\u0005\u0007\u0000"+
+		"\u000023\u0005\b\u0000\u000039\u0005\f\u0000\u000045\u0005\u0007\u0000"+
+		"\u000056\u0005\b\u0000\u000067\u0005\u0010\u0000\u000079\u0005\f\u0000"+
+		"\u00008.\u0001\u0000\u0000\u000081\u0001\u0000\u0000\u000084\u0001\u0000"+
+		"\u0000\u00009\u0007\u0001\u0000\u0000\u0000:;\u0005\f\u0000\u0000;<\u0005"+
+		"\u0002\u0000\u0000<\t\u0001\u0000\u0000\u0000=>\u0007\u0001\u0000\u0000"+
+		">\u000b\u0001\u0000\u0000\u0000?@\u0005\u0003\u0000\u0000@A\u0005\b\u0000"+
+		"\u0000AB\u0005\f\u0000\u0000BC\u0005\b\u0000\u0000CG\u0005\u0004\u0000"+
+		"\u0000DF\u0005\b\u0000\u0000ED\u0001\u0000\u0000\u0000FI\u0001\u0000\u0000"+
+		"\u0000GE\u0001\u0000\u0000\u0000GH\u0001\u0000\u0000\u0000HJ\u0001\u0000"+
+		"\u0000\u0000IG\u0001\u0000\u0000\u0000JK\u0003\n\u0005\u0000K\r\u0001"+
+		"\u0000\u0000\u0000LM\u0005\u0005\u0000\u0000MN\u0005\b\u0000\u0000NO\u0005"+
+		"\f\u0000\u0000O\u000f\u0001\u0000\u0000\u0000\u0007\u0013\u0018\u001d"+
+		"\"*8G";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

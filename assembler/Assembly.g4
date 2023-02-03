@@ -12,7 +12,7 @@ simple_instruction: OPCODE_SIMPLE;
 
 compound_instruction: OPCODE_COMPOUND SPACE literal
     | OPCODE_COMPOUND SPACE IDENTIFIER
-    | OPCODE_COMPOUND SPACE '$'IDENTIFIER;
+    | OPCODE_COMPOUND SPACE DOLLAR_SIGN IDENTIFIER;
 
 label: IDENTIFIER ':';
 
@@ -66,3 +66,5 @@ NEWLINE: '\r'? '\n'
 WS: [ \t];
 
 COMMENT: (SPACE)*';' ~[\n\r]*;
+
+DOLLAR_SIGN: '$';

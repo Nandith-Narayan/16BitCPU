@@ -5,8 +5,10 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import parser.AssemblyLexer;
 import parser.AssemblyParser;
 import parser.AssemblyVisitor;
+import statements.Statement;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Parser {
 
@@ -23,6 +25,11 @@ public class Parser {
             // Visit the nodes of the Parse Tree
             Visitor visitor = new Visitor();
             visitor.visitProgram(pc);
+            // Get sequence of statements
+            ArrayList<Statement> statements = visitor.getStatements();
+            for(Statement stmt: statements){
+                System.out.println(stmt);
+            }
 
 
         } catch (Exception e) {
