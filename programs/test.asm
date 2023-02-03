@@ -1,0 +1,3 @@
+LDAI 0x44
+LDBI 0x12
+ADD
