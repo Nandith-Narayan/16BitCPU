@@ -47,6 +47,12 @@ public interface AssemblyVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLiteral(AssemblyParser.LiteralContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link AssemblyParser#constant}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitConstant(AssemblyParser.ConstantContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link AssemblyParser#variable}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

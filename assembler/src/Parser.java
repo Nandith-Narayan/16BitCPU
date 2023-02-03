@@ -19,11 +19,10 @@ public class Parser {
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             // create the Parse Tree
             AssemblyParser parser = new AssemblyParser(tokens);
-            ParseTree parseTree = parser.program();
-
+            AssemblyParser.ProgramContext pc = parser.program();
             // Visit the nodes of the Parse Tree
             Visitor visitor = new Visitor();
-            visitor.visit(parseTree);
+            visitor.visitProgram(pc);
 
 
         } catch (Exception e) {

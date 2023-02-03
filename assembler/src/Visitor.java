@@ -4,17 +4,30 @@ import org.antlr.v4.runtime.tree.RuleNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import parser.AssemblyParser;
 import parser.AssemblyVisitor;
+import statements.Statement;
 
-import javax.xml.crypto.Data;
+import java.util.ArrayList;
 
 public class Visitor implements AssemblyVisitor<DataWrapper> {
+
+    ArrayList<Statement> statements;
+
+    public Visitor(){
+        statements = new ArrayList<Statement>();
+    }
+
     @Override
     public DataWrapper visitProgram(AssemblyParser.ProgramContext ctx) {
+        for(AssemblyParser.StatementContext stmt : ctx.statement()){
+            visitStatement(stmt);
+        }
+
         return null;
     }
 
     @Override
     public DataWrapper visitStatement(AssemblyParser.StatementContext ctx) {
+        System.out.println(ctx.toStringTree());
         return null;
     }
 
@@ -35,6 +48,11 @@ public class Visitor implements AssemblyVisitor<DataWrapper> {
 
     @Override
     public DataWrapper visitLiteral(AssemblyParser.LiteralContext ctx) {
+        return null;
+    }
+
+    @Override
+    public DataWrapper visitConstant(AssemblyParser.ConstantContext ctx) {
         return null;
     }
 

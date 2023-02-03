@@ -1,3 +1,8 @@
+ADDA
+
+const a = 4
+var b
+
 LDAI 0x44
-LDBI 0x12
-ADD
+LDBI $a
+ADD b
