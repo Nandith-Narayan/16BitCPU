@@ -1,4 +1,4 @@
-grammar assembly;
+grammar Assembly;
 
 program: (statement NEWLINE)*;
 
