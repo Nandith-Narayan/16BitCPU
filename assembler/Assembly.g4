@@ -1,6 +1,6 @@
 grammar Assembly;
 
-program: ((' '|'\t')* statement NEWLINE*)*;
+program: ((' '|'\t')* statement (COMMENT)? NEWLINE*)*;
 
 statement: label
     | variable
@@ -65,3 +65,4 @@ NEWLINE: '\r'? '\n'
 
 WS: [ \t];
 
+COMMENT: (SPACE)*';' ~[\n\r]*;

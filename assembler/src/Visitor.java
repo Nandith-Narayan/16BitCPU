@@ -4,6 +4,7 @@ import org.antlr.v4.runtime.tree.RuleNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import parser.AssemblyParser;
 import parser.AssemblyVisitor;
+import statements.Label;
 import statements.Statement;
 
 import java.util.ArrayList;
@@ -27,9 +28,10 @@ public class Visitor implements AssemblyVisitor<DataWrapper> {
 
     @Override
     public DataWrapper visitStatement(AssemblyParser.StatementContext ctx) {
-        //System.out.println(ctx.getText());
-        if(ctx.label() !=null){
-            System.out.println(ctx.label().getText());
+        Logger.log("Visiting Statement: \""+ctx.getText()+"\"");
+
+        if(ctx.label() != null){
+            visitLabel(ctx.label());
         }
         return null;
     }
@@ -46,6 +48,11 @@ public class Visitor implements AssemblyVisitor<DataWrapper> {
 
     @Override
     public DataWrapper visitLabel(AssemblyParser.LabelContext ctx) {
+        String labelName = ctx.IDENTIFIER().getText();
+
+        Logger.log("Encountered new Label: \""+labelName+"\"");
+
+        statements.add(new Label(labelName));
         return null;
     }
 
