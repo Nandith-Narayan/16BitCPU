@@ -7,6 +7,7 @@ This repo contains:
 - [ ] Schematic - [WIP]
 - [ ] Pictures (Once built :D)
 - [ ] Sample Programs
+- [ ] Helper Scripts to generate data for the EEPROMS
 
 ## Assembler
 This assembler supports the following instructions with direct, indirect, and immediate addressing modes:
