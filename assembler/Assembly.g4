@@ -1,6 +1,6 @@
 grammar Assembly;
 
-program: (statement NEWLINE*)*;
+program: ((' '|'\t')* statement NEWLINE*)*;
 
 statement: label
     | variable

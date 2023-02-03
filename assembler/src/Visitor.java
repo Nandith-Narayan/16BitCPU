@@ -27,7 +27,10 @@ public class Visitor implements AssemblyVisitor<DataWrapper> {
 
     @Override
     public DataWrapper visitStatement(AssemblyParser.StatementContext ctx) {
-        System.out.println(ctx.toStringTree());
+        //System.out.println(ctx.getText());
+        if(ctx.label() !=null){
+            System.out.println(ctx.label().getText());
+        }
         return null;
     }
 
