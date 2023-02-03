@@ -1,5 +1,5 @@
 # 16 Bit CPU
-This is my attempt at designing, building, and programming a custom 16-bit CPU using discrete logic chips.
+This is my attempt at designing, building, and programing a custom 16-bit CPU using discrete logic chips.
 
 This repo contains:
 - [ ] Logisim CPU simulation - [WIP]
