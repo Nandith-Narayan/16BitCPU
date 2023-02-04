@@ -3,6 +3,8 @@ package statements;
 public class CompoundConstantInstruction extends Instruction{
     String constantName;
     int constantValue;
+    boolean hasValue = false;
+
     public CompoundConstantInstruction(String opcode, String constantName) {
         super(opcode);
         this.constantName = constantName;
@@ -10,12 +12,18 @@ public class CompoundConstantInstruction extends Instruction{
 
     @Override
     public String toString() {
-        return "Instruction: "+opcode+" "+this.constantName;
+        if(hasValue) {
+            return "Instruction: " + opcode + " " + this.constantValue;
+        }else{
+            return "Instruction: " + opcode + " " + this.constantName;
+        }
     }
 
     public void applyConstant(String name, int value){
-        this.constantName = name;
-        this.constantValue = value;
+        if(this.constantName.equals(name)) {
+            this.constantValue = value;
+            hasValue = true;
+        }
     }
 
 }

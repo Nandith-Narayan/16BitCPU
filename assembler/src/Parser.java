@@ -57,6 +57,15 @@ public class Parser {
                 }
             }
 
+
+            System.out.println("***********************************");
+            System.out.println("Statements with constants filled in:");
+            System.out.println("***********************************");
+            for(int i=0;i<statements.size();i++){
+                Statement stmt = statements.get(i);
+                System.out.printf("0x%04x : ", i);
+                System.out.println(stmt);
+            }
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }

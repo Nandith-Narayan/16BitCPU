@@ -6,5 +6,5 @@ const d = 0x59F
 var b
 loopp:
     LDAI 0x44 ; HI
-    LDBI $a
-    ADD b
+    LDBI a
+    ADD d

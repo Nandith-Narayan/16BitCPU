@@ -14,6 +14,7 @@ public class Visitor implements AssemblyVisitor<DataWrapper> {
     ArrayList<Statement> statements;
     HashMap<String, Integer> constMap;
     HashMap<String, Boolean> varMap;
+    ArrayList<String> label;
 
     public Visitor(){
         statements = new ArrayList<Statement>();
