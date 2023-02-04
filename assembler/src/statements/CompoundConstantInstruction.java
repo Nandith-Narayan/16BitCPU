@@ -1,9 +1,9 @@
 package statements;
 
 public class CompoundConstantInstruction extends Instruction{
-    String constantName;
-    int constantValue;
-    boolean hasValue = false;
+    public String constantName;
+    public int constantValue;
+    public boolean hasValue = false;
 
     public CompoundConstantInstruction(String opcode, String constantName) {
         super(opcode);

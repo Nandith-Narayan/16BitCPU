@@ -14,12 +14,13 @@ public class Visitor implements AssemblyVisitor<DataWrapper> {
     ArrayList<Statement> statements;
     HashMap<String, Integer> constMap;
     HashMap<String, Boolean> varMap;
-    ArrayList<String> label;
+    ArrayList<String> labels;
 
     public Visitor(){
         statements = new ArrayList<Statement>();
         constMap = new HashMap<String, Integer>();
         varMap = new HashMap<String, Boolean>();
+        labels = new ArrayList<String>();
     }
 
     public ArrayList<Statement> getStatements(){
@@ -33,6 +34,11 @@ public class Visitor implements AssemblyVisitor<DataWrapper> {
     public HashMap<String, Boolean> getVarMap() {
         return varMap;
     }
+
+    public ArrayList<String> getLabels() {
+        return labels;
+    }
+
     @Override
     public DataWrapper visitProgram(AssemblyParser.ProgramContext ctx) {
         for(AssemblyParser.StatementContext stmt : ctx.statement()){
@@ -109,7 +115,13 @@ public class Visitor implements AssemblyVisitor<DataWrapper> {
     public DataWrapper visitLabel(AssemblyParser.LabelContext ctx) {
         String labelName = ctx.IDENTIFIER().getText();
 
-        Logger.log("Encountered new Label: \""+labelName+"\"", 1);
+
+        if(labels.contains(labelName)){
+            Logger.err("Encountered Duplicate Label: \""+labelName+"\"", 1);
+        }else{
+            Logger.log("Encountered new Label: \""+labelName+"\"", 1);
+            labels.add(labelName);
+        }
 
         statements.add(new Label(labelName));
         return null;

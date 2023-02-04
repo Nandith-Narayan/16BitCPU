@@ -1,3 +1,7 @@
+import data.Data;
+import data.LabelPlaceholder;
+import data.Opcode;
+import data.RawData;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -5,7 +9,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import parser.AssemblyLexer;
 import parser.AssemblyParser;
 import parser.AssemblyVisitor;
-import statements.Statement;
+import statements.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,15 +61,65 @@ public class Parser {
                 }
             }
 
+            ArrayList<Data> IR = new ArrayList<Data>();
+            HashMap<String, Integer> variableMap = new HashMap<String, Integer>();
+            HashMap<String, Integer> labelMap = new HashMap<String, Integer>();
+            ArrayList<String> labels = visitor.getLabels();
+            // Add jump to entry point:
+            IR.add(new Opcode("JMP"));
+            IR.add(new LabelPlaceholder("main"));
+            int address = IR.size();
+
+            // Allocate space for variables
+            for(String varName : varNames){
+                IR.add(new RawData(0));
+                variableMap.put(varName, address);
+                address++;
+            }
+
+            // Convert Statement list to Intermediate Representation
+            for(Statement stmt : statements){
+                if(stmt instanceof Instruction){
+                    Instruction inst = (Instruction) stmt;
+                    IR.add(new Opcode(inst.opcode));
+                    if(inst instanceof CompoundConstantInstruction){
+                        CompoundConstantInstruction compInst = (CompoundConstantInstruction) inst;
+                        if(!compInst.hasValue){
+                            System.err.println("UNKNOWN Constant: \""+compInst.constantName+"\"");
+                            System.exit(0);
+                        }
+                        IR.add(new RawData(compInst.constantValue));
+                        address++;
+                    }else if(inst instanceof CompoundLiteralInstruction){
+                        IR.add(new RawData(((CompoundLiteralInstruction) inst).literal));
+                        address++;
+                    }else if(inst instanceof CompoundVariableInstruction){
+                        String name = ((CompoundVariableInstruction) inst).variableName;
+                        if(variableMap.containsKey(name)){
+                            IR.add(new RawData(variableMap.get(name)));
+                        }else if(labels.contains(name)){
+                            IR.add(new LabelPlaceholder(name));
+                        }else{
+                            System.err.println("UNKNOWN Variable/Label: \""+name+"\"");
+                            System.exit(0);
+                        }
+                        address++;
+                    }
+                    address++;
+                }else if(stmt instanceof Label){
+                    labelMap.put(((Label) stmt).name, address);
+                }
+            }
 
             System.out.println("***********************************");
-            System.out.println("Statements with constants filled in:");
+            System.out.println("Intermediate Representation:");
             System.out.println("***********************************");
-            for(int i=0;i<statements.size();i++){
-                Statement stmt = statements.get(i);
-                System.out.printf("0x%04x : ", i);
-                System.out.println(stmt);
+            for(Data d : IR){
+                System.out.println(d);
             }
+
+
+
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
