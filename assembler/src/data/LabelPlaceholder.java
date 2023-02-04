@@ -1,5 +1,7 @@
 package data;
 
+import java.util.HashMap;
+
 public class LabelPlaceholder extends Data{
     String label;
     public LabelPlaceholder(String label){
@@ -10,5 +12,8 @@ public class LabelPlaceholder extends Data{
         return "Label: "+label;
     }
 
+    public int emit(HashMap<String, Integer> labelMap){
+        return labelMap.get(label);
+    }
 
 }

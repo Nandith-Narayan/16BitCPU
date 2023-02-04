@@ -1,5 +1,7 @@
 package data;
 
+import java.util.HashMap;
+
 public class RawData extends Data{
 
     int data;
@@ -9,6 +11,10 @@ public class RawData extends Data{
 
     public String toString(){
         return "Data: "+data;
+    }
+
+    public int emit(HashMap<String, Integer> labelMap){
+        return data;
     }
 
 }

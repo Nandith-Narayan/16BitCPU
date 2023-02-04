@@ -118,7 +118,12 @@ public class Parser {
                 System.out.println(d);
             }
 
-
+            System.out.println("***********************************");
+            System.out.println("Machine Code:");
+            System.out.println("***********************************");
+            for(Data d : IR){
+                System.out.println(d.emit(labelMap));
+            }
 
         } catch (Exception e) {
             System.err.println(e.getMessage());
