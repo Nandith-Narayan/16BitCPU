@@ -3,7 +3,7 @@ This is my attempt at designing, building, and programing a custom 16-bit CPU us
 
 This repo contains:
 - [ ] Logisim CPU simulation - [WIP]
-- [X] Assembler
+- [x] Assembler
 - [ ] Schematic - [WIP]
 - [ ] Pictures (Once built :D)
 - [ ] Sample Programs
