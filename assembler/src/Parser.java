@@ -121,8 +121,9 @@ public class Parser {
             System.out.println("***********************************");
             System.out.println("Machine Code:");
             System.out.println("***********************************");
-            for(Data d : IR){
-                System.out.println(d.emit(labelMap));
+            for(int i=0;i<IR.size();i++){
+                System.out.printf("0x%04x : ", i);
+                System.out.printf("0x%04x\n", IR.get(i).emit(labelMap));
             }
 
         } catch (Exception e) {

@@ -11,4 +11,4 @@ loopp:
     LDAI 0x44 ; HI
     LDBI a
     ADD d
-    ADD a
+    ADD $b
