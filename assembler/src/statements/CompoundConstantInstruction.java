@@ -1,7 +1,8 @@
 package statements;
 
 public class CompoundConstantInstruction extends Instruction{
-    public String constantName;
+    String constantName;
+    int constantValue;
     public CompoundConstantInstruction(String opcode, String constantName) {
         super(opcode);
         this.constantName = constantName;
@@ -10,6 +11,11 @@ public class CompoundConstantInstruction extends Instruction{
     @Override
     public String toString() {
         return "Instruction: "+opcode+" "+this.constantName;
+    }
+
+    public void applyConstant(String name, int value){
+        this.constantName = name;
+        this.constantValue = value;
     }
 
 }

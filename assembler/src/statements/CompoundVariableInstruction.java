@@ -9,7 +9,7 @@ public class CompoundVariableInstruction extends Instruction{
 
     @Override
     public String toString() {
-        return "Instruction: "+opcode+" "+this.variableName;
+        return "Instruction: "+opcode+" $"+this.variableName;
     }
 
 }

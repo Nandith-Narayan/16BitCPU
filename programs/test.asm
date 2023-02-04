@@ -1,9 +1,10 @@
+main: 
 ADDA
 
 const a = 4
-const c = 0x59F
+const d = 0x59F
 var b
-loop:
+loopp:
     LDAI 0x44 ; HI
     LDBI $a
     ADD b

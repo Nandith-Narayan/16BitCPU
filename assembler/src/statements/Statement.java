@@ -6,4 +6,9 @@ public class Statement {
         this.row = row;
         this.col = col;
     }
+
+    public void applyConstant(String name, int value){
+
+    }
+
 }

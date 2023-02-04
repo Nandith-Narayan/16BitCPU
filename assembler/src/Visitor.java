@@ -24,6 +24,14 @@ public class Visitor implements AssemblyVisitor<DataWrapper> {
     public ArrayList<Statement> getStatements(){
         return this.statements;
     }
+
+    public HashMap<String, Integer> getConstMap() {
+        return constMap;
+    }
+
+    public HashMap<String, Boolean> getVarMap() {
+        return varMap;
+    }
     @Override
     public DataWrapper visitProgram(AssemblyParser.ProgramContext ctx) {
         for(AssemblyParser.StatementContext stmt : ctx.statement()){

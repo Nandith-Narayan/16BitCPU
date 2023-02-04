@@ -9,6 +9,8 @@ import statements.Statement;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class Parser {
 
@@ -27,10 +29,33 @@ public class Parser {
             visitor.visitProgram(pc);
             // Get sequence of statements
             ArrayList<Statement> statements = visitor.getStatements();
-            for(Statement stmt: statements){
+            HashMap<String, Integer> constMap = visitor.getConstMap();
+            HashMap<String, Boolean> varMap = visitor.getVarMap();
+            System.out.println("***********************************");
+            System.out.println("Flattened Statements:");
+            System.out.println("***********************************");
+            for(int i=0;i<statements.size();i++){
+                Statement stmt = statements.get(i);
+                System.out.printf("0x%04x : ", i);
                 System.out.println(stmt);
             }
 
+            // Check for duplicate names
+            List<String> constNames = constMap.keySet().stream().toList();
+            List<String> varNames = varMap.keySet().stream().toList();
+            for(String c : constNames){
+                if(varNames.contains(c)){
+                    System.err.println("Constant and Variable has the same name! \""+c+"\"");
+                    System.exit(0);
+                }
+            }
+
+            // Apply Constants:
+            for(Statement stmt : statements){
+                for(String name: constNames) {
+                    stmt.applyConstant(name, constMap.get(name));
+                }
+            }
 
         } catch (Exception e) {
             System.err.println(e.getMessage());

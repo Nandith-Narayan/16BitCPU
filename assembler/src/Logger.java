@@ -10,7 +10,7 @@ public class Logger {
             s = "└───"+s;
         }
         s = colors[level] + s;
-        System.out.println(s+"\u001b[37m");
+        System.out.println(s+"\u001b[0m");
     }
     public static void err(String s, int level){
 
@@ -21,7 +21,8 @@ public class Logger {
             s = "└───"+s;
         }
         s = "\u001b[31m" + s;
-        System.out.println(s+"\u001b[37m");
+        System.out.println(s+"\u001b[0m");
+        System.exit(0);
     }
 
 }
