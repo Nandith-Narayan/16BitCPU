@@ -49,9 +49,16 @@ def compute_result(a, b, op, carry_in_a, carry_in_b):
         result = a ^ b
     elif op == 5: # SHLA
         result = (a << 1) + carry_in_a
-    elif op == 6: # SHLA
+        if (result & 0x010) > 1:
+            carry = 1
+    elif op == 6: # SHLB
         result = (b << 1) + carry_in_b
+        if (result & 0x010) > 1:
+            carry = 1
+    elif op == 7: #
+        result = a 
         
+
     result = result & 0x0F
     return ((carry << 4) & 0x010) + result
     
