@@ -1,4 +1,6 @@
 main: 
-    ADDI 0x0F
-    ADDB
+    LDAI 0x40
+    LDBI 0b0010
+    loop:
     ADDA
+    JNC loop

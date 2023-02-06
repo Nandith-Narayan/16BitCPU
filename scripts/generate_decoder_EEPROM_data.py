@@ -140,34 +140,6 @@ def JMP(step):
     return [RESET_MICRO_STEP] 
 
 def JC(step, carry):
-    if carry == 1:
-        if step == 2:
-            return [PC_ENABLE]
-        if step == 3:
-            return [RESET_MICRO_STEP]
-    else:
-        if step == 2:
-            return [PC_OUT, RAM_ADDR]
-        if step == 3:
-            return [RAM_OUT, PC_IN]    
-    
-    return [RESET_MICRO_STEP] 
-
-def JZ(step, zero):
-    if zero ==1:
-        if step == 2:
-            return [PC_ENABLE]
-        if step == 3:
-            return [RESET_MICRO_STEP]
-    else:
-        if step == 2:
-            return [PC_OUT, RAM_ADDR]
-        if step == 3:
-            return [RAM_OUT, PC_IN]    
-    
-    return [RESET_MICRO_STEP]
-    
-def JNC(step, carry):
     if carry == 0:
         if step == 2:
             return [PC_ENABLE]
@@ -181,8 +153,36 @@ def JNC(step, carry):
     
     return [RESET_MICRO_STEP] 
 
-def JNZ(step, zero):
+def JZ(step, zero):
     if zero == 0:
+        if step == 2:
+            return [PC_ENABLE]
+        if step == 3:
+            return [RESET_MICRO_STEP]
+    else:
+        if step == 2:
+            return [PC_OUT, RAM_ADDR]
+        if step == 3:
+            return [RAM_OUT, PC_IN]    
+    
+    return [RESET_MICRO_STEP]
+    
+def JNC(step, carry):
+    if carry == 1:
+        if step == 2:
+            return [PC_ENABLE]
+        if step == 3:
+            return [RESET_MICRO_STEP]
+    else:
+        if step == 2:
+            return [PC_OUT, RAM_ADDR]
+        if step == 3:
+            return [RAM_OUT, PC_IN]    
+    
+    return [RESET_MICRO_STEP] 
+
+def JNZ(step, zero):
+    if zero == 1:
         if step == 2:
             return [PC_ENABLE]
         if step == 3:
@@ -259,7 +259,7 @@ def ADD(step):
     if step == 4:
         return [RAM_OUT, B_IN]
     if step == 5:
-        return [ALU_OUT, A_IN]
+        return [ALU_OUT, A_IN, FLAGS_IN]
         
     return [RESET_MICRO_STEP]     
     
@@ -270,7 +270,7 @@ def ADDI(step):
     if step == 3:
         return [RAM_OUT, B_IN, PC_ENABLE]
     if step == 4:
-        return [ALU_OUT, A_IN]
+        return [ALU_OUT, A_IN, FLAGS_IN]
         
     return [RESET_MICRO_STEP] 
 
@@ -282,7 +282,7 @@ def SUB(step):
     if step == 4:
         return [RAM_OUT, B_IN]
     if step == 5:
-        return [ALU_OP1, ALU_OUT, A_IN]
+        return [ALU_OP1, ALU_OUT, A_IN, FLAGS_IN]
         
     return [RESET_MICRO_STEP]     
     
@@ -293,50 +293,50 @@ def SUBI(step):
     if step == 3:
         return [RAM_OUT, B_IN, PC_ENABLE]
     if step == 4:
-        return [ALU_OP1, ALU_OUT, A_IN]
+        return [ALU_OP1, ALU_OUT, A_IN, FLAGS_IN]
         
     return [RESET_MICRO_STEP]      
 
 def AND(step):
     if step == 2:
-        return [ALU_OP2, ALU_OUT, A_IN]
+        return [ALU_OP2, ALU_OUT, A_IN, FLAGS_IN]
         
     return [RESET_MICRO_STEP]  
     
 def XOR(step):
     if step == 2:
-        return [ALU_OP3, ALU_OUT, A_IN]
+        return [ALU_OP3, ALU_OUT, A_IN, FLAGS_IN]
         
     return [RESET_MICRO_STEP]
     
 def OR(step):
     if step == 2:
-        return [ALU_OP1, ALU_OP2, ALU_OUT, A_IN]
+        return [ALU_OP1, ALU_OP2, ALU_OUT, A_IN, FLAGS_IN]
         
     return [RESET_MICRO_STEP]     
     
     
 def ADDA(step):
     if step == 2:
-        return [ALU_OUT, A_IN]
+        return [ALU_OUT, A_IN, FLAGS_IN]
         
     return [RESET_MICRO_STEP]
 
 def ADDB(step):
     if step == 2:
-        return [ALU_OUT, B_IN]
+        return [ALU_OUT, B_IN, FLAGS_IN]
         
     return [RESET_MICRO_STEP]
     
 def SUBA(step):
     if step == 2:
-        return [ALU_OP1, ALU_OUT, A_IN]
+        return [ALU_OP1, ALU_OUT, A_IN, FLAGS_IN]
         
     return [RESET_MICRO_STEP]
 
 def SUBB(step):
     if step == 2:
-        return [ALU_OP1, ALU_OUT, B_IN]
+        return [ALU_OP1, ALU_OUT, B_IN, FLAGS_IN]
         
     return [RESET_MICRO_STEP]
     

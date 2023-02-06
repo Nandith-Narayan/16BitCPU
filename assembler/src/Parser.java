@@ -88,10 +88,16 @@ public class Parser {
                     if(inst instanceof CompoundConstantInstruction){
                         CompoundConstantInstruction compInst = (CompoundConstantInstruction) inst;
                         if(!compInst.hasValue){
-                            System.err.println("UNKNOWN Constant: \""+compInst.constantName+"\"");
-                            System.exit(0);
+                            if(!labels.contains(compInst.constantName)) {
+                                System.err.println("UNKNOWN Constant: \"" + compInst.constantName + "\"");
+                                System.exit(0);
+                            }else{
+                                IR.add(new LabelPlaceholder(compInst.constantName));
+                            }
+                        }else{
+                            IR.add(new RawData(compInst.constantValue));
                         }
-                        IR.add(new RawData(compInst.constantValue));
+
                         address++;
                     }else if(inst instanceof CompoundLiteralInstruction){
                         IR.add(new RawData(((CompoundLiteralInstruction) inst).literal));

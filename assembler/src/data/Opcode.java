@@ -19,7 +19,7 @@ public class Opcode extends Data{
     public int emit(HashMap<String, Integer> labelMap){
         for(int i=0;i<OPCODES.length;i++){
             if(OPCODES[i].equals(opcode)){
-                return i << 9;
+                return i << 10;
             }
         }
         return -888888888;
