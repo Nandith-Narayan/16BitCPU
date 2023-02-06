@@ -11,6 +11,9 @@ import parser.AssemblyParser;
 import parser.AssemblyVisitor;
 import statements.*;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -121,10 +124,17 @@ public class Parser {
             System.out.println("***********************************");
             System.out.println("Machine Code:");
             System.out.println("***********************************");
+            byte[] data = new byte[IR.size()*2];
             for(int i=0;i<IR.size();i++){
                 System.out.printf("0x%04x : ", i);
-                System.out.printf("0x%04x\n", IR.get(i).emit(labelMap));
+                int a = IR.get(i).emit(labelMap);
+                System.out.printf("0x%04x\n", a);
+                data[i*2] = (byte)((a >> 8) & 0x0FF);
+                data[(i*2)+1] = (byte)(a & 0x0FF);
             }
+            FileOutputStream fis = new FileOutputStream(new File("test.bin"));
+            fis.write(data, 0, data.length);
+            fis.close();
 
         } catch (Exception e) {
             System.err.println(e.getMessage());

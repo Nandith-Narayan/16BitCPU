@@ -67,9 +67,9 @@ def make_control_words(enable_bits):
 
     
     control_word = ("".join([str(i) for i in control_word]))    
-    byte_1 = int(control_word[:8][::-1])
-    byte_2 = int(control_word[8:16][::-1])
-    byte_3 = int(control_word[16:24][::-1])
+    byte_1 = int(control_word[:8][::-1],2)
+    byte_2 = int(control_word[8:16][::-1],2)
+    byte_3 = int(control_word[16:24][::-1],2)
         
         
     return (byte_1&0x0FF, byte_2&0x0FF, byte_3&0x0FF)
@@ -103,7 +103,7 @@ def compute_control_step(opcode, step, zero_flag, carry_flag):
     
     print(f"OPCODE: {opcode} not implemented")
     
-    return []
+    return [RESET_MICRO_STEP]
 
 def ADD(step):
     if step == 2:
