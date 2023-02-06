@@ -132,7 +132,7 @@ public class Parser {
                 data[i*2] = (byte)((a >> 8) & 0x0FF);
                 data[(i*2)+1] = (byte)(a & 0x0FF);
             }
-            FileOutputStream fis = new FileOutputStream(new File("test.bin"));
+            FileOutputStream fis = new FileOutputStream(path.replace(".asm", ".bin"));
             fis.write(data, 0, data.length);
             fis.close();
 

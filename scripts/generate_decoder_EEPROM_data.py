@@ -100,10 +100,156 @@ def compute_control_step(opcode, step, zero_flag, carry_flag):
         return ADDI(step)
     if opcode == "ADD":
         return ADD(step)
-    
+    if opcode == "SUBI":
+        return SUBI(step)
+    if opcode == "SUB":
+        return SUB(step)
+    if opcode == "LDA":
+        return LDA(step)
+    if opcode == "LDB":
+        return LDB(step)
+    if opcode == "LDAI":
+        return LDAI(step)
+    if opcode == "LDBI":
+        return LDBI(step)
+    if opcode == "STA":
+        return STA(step)
+    if opcode == "STB":
+        return STB(step)
+    if opcode == "JMP":
+        return JMP(step)
+    if opcode == "JC":
+        return JC(step, carry_flag)
+    if opcode == "JZ":
+        return JZ(step, zero_flag)
+    if opcode == "JNC":
+        return JNC(step, carry_flag)
+    if opcode == "JNZ":
+        return JNZ(step, zero_flag)
+        
     print(f"OPCODE: {opcode} not implemented")
     
     return [RESET_MICRO_STEP]
+
+def JMP(step):
+    if step == 2:
+        return [PC_OUT, RAM_ADDR]
+    if step == 3:
+        return [RAM_OUT, PC_IN]    
+    
+    return [RESET_MICRO_STEP] 
+
+def JC(step, carry):
+    if carry == 1:
+        if step == 2:
+            return [PC_ENABLE]
+        if step == 3:
+            return [RESET_MICRO_STEP]
+    else:
+        if step == 2:
+            return [PC_OUT, RAM_ADDR]
+        if step == 3:
+            return [RAM_OUT, PC_IN]    
+    
+    return [RESET_MICRO_STEP] 
+
+def JZ(step, zero):
+    if zero ==1:
+        if step == 2:
+            return [PC_ENABLE]
+        if step == 3:
+            return [RESET_MICRO_STEP]
+    else:
+        if step == 2:
+            return [PC_OUT, RAM_ADDR]
+        if step == 3:
+            return [RAM_OUT, PC_IN]    
+    
+    return [RESET_MICRO_STEP]
+    
+def JNC(step, carry):
+    if carry == 0:
+        if step == 2:
+            return [PC_ENABLE]
+        if step == 3:
+            return [RESET_MICRO_STEP]
+    else:
+        if step == 2:
+            return [PC_OUT, RAM_ADDR]
+        if step == 3:
+            return [RAM_OUT, PC_IN]    
+    
+    return [RESET_MICRO_STEP] 
+
+def JNZ(step, zero):
+    if zero == 0:
+        if step == 2:
+            return [PC_ENABLE]
+        if step == 3:
+            return [RESET_MICRO_STEP]
+    else:
+        if step == 2:
+            return [PC_OUT, RAM_ADDR]
+        if step == 3:
+            return [RAM_OUT, PC_IN]    
+    
+    return [RESET_MICRO_STEP] 
+
+def STA(step):
+    if step == 2:
+        return [PC_OUT, RAM_ADDR]
+    if step == 3:
+        return [RAM_OUT, RAM_ADDR, PC_ENABLE]
+    if step == 4:
+        return [A_OUT, RAM_IN]
+        
+    return [RESET_MICRO_STEP] 
+    
+def STB(step):
+    if step == 2:
+        return [PC_OUT, RAM_ADDR]
+    if step == 3:
+        return [RAM_OUT, RAM_ADDR, PC_ENABLE]
+    if step == 4:
+        return [B_OUT, RAM_IN]
+        
+    return [RESET_MICRO_STEP]     
+    
+def LDAI(step):
+    if step == 2:
+        return [PC_OUT, RAM_ADDR]
+    if step == 3:
+        return [RAM_OUT, A_IN, PC_ENABLE]
+        
+    return [RESET_MICRO_STEP] 
+
+def LDBI(step):
+    if step == 2:
+        return [PC_OUT, RAM_ADDR]
+    if step == 3:
+        return [RAM_OUT, B_IN, PC_ENABLE]
+        
+    return [RESET_MICRO_STEP] 
+
+def LDB(step):
+    if step == 2:
+        return [PC_OUT, RAM_ADDR]
+    if step == 3:
+        return [RAM_OUT, RAM_ADDR, PC_ENABLE]
+    if step == 4:
+        return [RAM_OUT, B_IN]
+    
+    return [RESET_MICRO_STEP]
+
+def LDA(step):
+    if step == 2:
+        return [PC_OUT, RAM_ADDR]
+    if step == 3:
+        return [RAM_OUT, RAM_ADDR, PC_ENABLE]
+    if step == 4:
+        return [RAM_OUT, A_IN]
+    
+    return [RESET_MICRO_STEP]    
 
 def ADD(step):
     if step == 2:
@@ -126,7 +272,30 @@ def ADDI(step):
     if step == 4:
         return [ALU_OUT, A_IN]
         
-    return [RESET_MICRO_STEP]  
+    return [RESET_MICRO_STEP] 
+
+def SUB(step):
+    if step == 2:
+        return [PC_OUT, RAM_ADDR]
+    if step == 3:
+        return [RAM_OUT, RAM_ADDR, PC_ENABLE]
+    if step == 4:
+        return [RAM_OUT, B_IN]
+    if step == 5:
+        return [ALU_OP1, ALU_OUT, A_IN]
+        
+    return [RESET_MICRO_STEP]     
+    
+    
+def SUBI(step):
+    if step == 2:
+        return [PC_OUT, RAM_ADDR]
+    if step == 3:
+        return [RAM_OUT, B_IN, PC_ENABLE]
+    if step == 4:
+        return [ALU_OP1, ALU_OUT, A_IN]
+        
+    return [RESET_MICRO_STEP]      
 
 def AND(step):
     if step == 2:
