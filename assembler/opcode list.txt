@@ -1,0 +1,24 @@
+NOP  ; No Operation
+ADDA ; A = A + B
+ADDB ; B = A + B
+SUBA ; A = A - B
+SUBB ; B = A - B
+HLT  ; Halt CPU
+XOR  ; A = A ^ B
+AND  ; A = A & B
+OR   ; A = A | B
+ADD  ; ADD [mem] - Load value at memory address into B, A = A + B
+ADDI ; ADD [num] - Load specified value into B, A = A + B
+SUB  ; SUB [mem] - Load value at memory address into B, A = A - B
+SUBI ; SUB [num] - Load specified value into B, A = A - B
+LDA  ; LDA [mem] - Load value at memory address into A
+LDAI ; LDAI [num] - Load specified value into A
+LDB  ; LDB [mem] - Load value at memory address into B
+LDBI ; LDBI [num] - Load specified value into B
+STA  ; STA [mem] - Store A's value at memory address specified.
+STB  ; STB [mem] - Store B's value at memory address specified.
+JMP  ; Unconditional Jump
+JC   ; Jump if carry flag is set.
+JZ   ; Jump if zero flag is set.
+JNC  ; Jump if carry flag is NOT set.
+JNZ  ; Jump if zero flag is NOT set.   
