@@ -2,42 +2,45 @@ import time
 
 def main():
     bt = time.time()
-    rom_data = []
+    rom_data_first = []
+    rom_data_rest = []
     for address in range(2**13):
-        full_a = address & 0x01F
-        full_b = (address >> 8) & 0x01F
         
+        carry_in = address & 0x01
+        a = (address >> 1) & 0x0F
         op = (address >> 5) & 0x07
-        if op == 1: # SUB
-            # 2's complement B:
-            full_b = full_b ^ 0x01F
-            full_b += 1
-            full_b = full_b & 0x01F
+        b = (address >> 8) & 0x0F
         
-        a = (full_a >> 1) & 0x0F
-        b = (full_b >> 1) & 0x0F
-        
-        carry_in_a = full_a & 0x01
-        carry_in_b = full_b & 0x01
-        
-        data = compute_result(a, b, op, carry_in_a, carry_in_b)
-        rom_data.append(data)
+        data_first = compute_result(a, b, op, carry_in, is_first=True)
+        data_rest = compute_result(a, b, op, carry_in, is_first=False)
+        rom_data_first.append(data_first)
+        rom_data_rest.append(data_rest)
     
     at = time.time()
     print(f"Generated ALU EEPROM data in {(at-bt)*1000:.1f} ms.")
     
-    output = bytes(rom_data) 
-    with open("ALU_ROM_DATA.bin", "wb") as f:
+    output = bytes(rom_data_first) 
+    with open("ALU_ROM_DATA_FIRST.bin", "wb") as f:
+        f.write(output)
+    
+    output = bytes(rom_data_rest) 
+    with open("ALU_ROM_DATA_REST.bin", "wb") as f:
         f.write(output)
         
-    print(f"Wrote {len(output)} bytes.")
-def compute_result(a, b, op, carry_in_a, carry_in_b):
+    print(f"Wrote {len(output)}x2 bytes.")
+def compute_result(a, b, op, carry_in, is_first=False):
     # a, b <- 4 bit sections of the registers
     result = 0
     carry = 0
-    if op == 0 or op == 1: # ADD or SUB remember to 2's complement the entire 16bit value of register B
+    if op == 0: # ADD
         result = a + b
-        if carry_in_a == 1 and carry_in_b == 1:
+        result += carry_in
+        if (result & 0x010) > 1:
+            carry = 1
+    elif op == 1: # SUB
+        b = (b ^ 0x0F) & 0x0F # negate B
+        result = a + b + carry_in
+        if is_first:
             result += 1
         if (result & 0x010) > 1:
             carry = 1
@@ -48,11 +51,11 @@ def compute_result(a, b, op, carry_in_a, carry_in_b):
     elif op == 4: # XOR
         result = a ^ b
     elif op == 5: # SHLA
-        result = (a << 1) + carry_in_a
+        result = (a << 1) + carry_in
         if (result & 0x010) > 1:
             carry = 1
     elif op == 6: # SHLB
-        result = (b << 1) + carry_in_b
+        result = (b << 1) + carry_in
         if (result & 0x010) > 1:
             carry = 1
     elif op == 7: #
